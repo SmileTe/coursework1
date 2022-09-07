@@ -4,19 +4,20 @@ public class Main {
     public static void main(String[] args) {
 
         Employee[] array = new Employee[10];
-        array[0] = new Employee("Иванов Иван Иванович",1, 20_000);
-        array[1] = new Employee("Петров Петр Петрович",2, 25_000);
-        array[2] = (new Employee("Сидоров Сидор Сидорович",3, 30_000));
-        array[3] = (new Employee("Козлов П.П",4, 20_000));
-        array[4] = (new Employee("Кузнецов Е.Е",5, 25_000));
-        array[5] = (new Employee("Смирнов В.В",1, 35_000));
-        array[6] = (new Employee("Васечкин П.П",2, 40_000));
-        array[7] = (new Employee("Рыжов Е.Е",3, 45_000));
-        array[8] = (new Employee("Васильев А.А",4, 50_000));
-        array[9] = new Employee("Соколов П.П",5, 55_000);
+        array[0] = new Employee("Иванов Иван Иванович", 1, 20_000);
+        array[1] = new Employee("Петров Петр Петрович", 2, 25_000);
+        array[2] = (new Employee("Сидоров Сидор Сидорович", 3, 30_000));
+        array[3] = (new Employee("Козлов П.П", 4, 20_000));
+        array[4] = (new Employee("Кузнецов Е.Е", 5, 25_000));
+        array[5] = (new Employee("Смирнов В.В", 1, 35_000));
+        array[6] = (new Employee("Васечкин П.П", 2, 40_000));
+        array[7] = (new Employee("Рыжов Е.Е", 3, 45_000));
+        array[8] = (new Employee("Васильев А.А", 4, 50_000));
+        array[9] = new Employee("Соколов П.П", 5, 55_000);
+        EmployeeBook employeeBook = new EmployeeBook(array);
 
-        task1(array);
-        task2(array, 2);
+        task1(employeeBook);
+        task2(employeeBook, 2);
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите число");
@@ -40,9 +41,12 @@ public class Main {
             }
         }
 
+        task3(employeeBook);
+
     }
 
-    public static void task1(Employee[] array) {
+    public static void task1(EmployeeBook employeeBook) {
+        Employee[] array = employeeBook.getArray();
 
         //список всех сотрудников
         for (int i = 0; i < array.length; i++) {
@@ -50,23 +54,23 @@ public class Main {
         }
 
         //сумма зп
-        System.out.println(getAmountOfSalary(array));
+        System.out.println(employeeBook.getAmountOfSalary(array));
 
         //мин зп
-        System.out.println(getMinSalary(array).toString());
+        System.out.println(employeeBook.getMinSalary(array).toString());
 
         //мах зп
-        System.out.println(getMaxSalary(array).toString());
+        System.out.println(employeeBook.getMaxSalary(array).toString());
 
         //средн значение зп
-        System.out.println(getAvaregeSalary(array));
+        System.out.println(employeeBook.getAvaregeSalary(array));
 
         //фио всех сотрудников
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i].getName());
         }
 
-        array = indexSalary(array, 6);
+        array = employeeBook.indexSalary(array, 6);
 
         //список всех сотрудников
         for (int i = 0; i < array.length; i++) {
@@ -74,153 +78,59 @@ public class Main {
         }
     }
 
-    public static void task2(Employee[] array, int departmentForSelection) {
+    public static void task2(EmployeeBook employeeBook, int departmentForSelection) {
+        Employee[] array = employeeBook.getArray();
 
         // 1. Сотрудника с минимальной зарплатой по отделу.
-        System.out.println(getMinSalary(array,departmentForSelection).toString());
+        System.out.println(employeeBook.getMinSalary(array, departmentForSelection).toString());
 
         //2. Сотрудника с максимальной зарплатой.
-        System.out.println(getMaxSalary(array,departmentForSelection).toString());
+        System.out.println(employeeBook.getMaxSalary(array, departmentForSelection).toString());
 
         //3. Сумму затрат на зарплату по отделу.
-        System.out.println(getAmountOfSalary(array,departmentForSelection));
+        System.out.println(employeeBook.getAmountOfSalary(array, departmentForSelection));
 
         //4. Среднюю зарплату по отделу (учесть, что количество людей в отделе отличается от employees.length).
-        System.out.println(getAvaregeSalary(array,departmentForSelection));
+        System.out.println(employeeBook.getAvaregeSalary(array, departmentForSelection));
 
         //5. Проиндексировать зарплату всех сотрудников отдела на процент, который приходит в качестве параметра.
-        array = indexSalary(array, 6,departmentForSelection);
+        array = employeeBook.indexSalary(array, 6, departmentForSelection);
 
         //6. Напечатать всех сотрудников отдела (все данные, кроме отдела).
         for (int i = 0; i < array.length; i++) {
-            if(array[i].getDepartment()==departmentForSelection) {
+            if (array[i].getDepartment() == departmentForSelection) {
                 System.out.println(array[i].toString());
             }
         }
     }
 
-    public static  int getAmountOfSalary(Employee[] array) {
-        int amount = 0;
+    public static void task3(EmployeeBook employeeBook) {
+        Employee[] array = employeeBook.getArray();
 
-        for (int i = 0; i < array.length; i++) {
-            amount = amount + array[i].getSalary();
-        }
-        return amount;
-    }
+        // Удалить сотрудника (находим сотрудника по Ф. И. О. и/или id, о
+        Employee[] newArray = employeeBook.deleteWorker(array, "Test", 2);
+        employeeBook.setArray(newArray);
 
-    public static  int getAmountOfSalary(Employee[] array, int departmentForSelection) {
-        int amount = 0;
+        //Добавить нового сотрудника в свободную ячейку
+        Employee newWorker = new Employee("Хрюша М.М", 1, 29_000);
+        newArray = employeeBook.addNewWorker(array, newWorker);
+        employeeBook.setArray(newArray);
 
-        for (int i = 0; i < array.length; i++) {
-            if(array[i].getDepartment()==departmentForSelection) {
-                amount = amount + array[i].getSalary();
-            }
-        }
-        return amount;
-    }
+        //Изменить сотрудника (получить сотрудника по Ф. И. О., изменить зп и/или отдел):
+        newArray = employeeBook.changeWorker(array, "Хрюша М.М", 2, 22_000);
+        employeeBook.setArray(newArray);
 
-    public static Employee getMinSalary(Employee[] array) {
-        int minimum = array[0].getSalary();
-        Employee employee = array[0];
 
-        for (int i = 1; i < array.length; i++) {
-            int salary = array[i].getSalary();
-            if (minimum > salary){
-                minimum = salary;
-                employee = array[i];
-            }
-        }
-        return employee;
-    }
-
-    public static Employee getMinSalary(Employee[] array, int departmentForSelection) {
-        int minimum = 0;
-        Employee employee = array[0];
-
-        for (int i = 0; i < array.length; i++) {
-            int salary = array[i].getSalary();
-            int department = array[i].getDepartment();
-            if (department == departmentForSelection && ( minimum == 0||minimum >salary)){
-                minimum = salary;
-                employee = array[i];
-            }
-        }
-        return employee;
-    }
-
-    public static Employee getMaxSalary(Employee[] array) {
-        int maximum = array[0].getSalary();
-        Employee employee = array[0];
-        for (int i = 1; i < array.length; i++) {
-            int salary = array[i].getSalary();
-            if (maximum < salary){
-                maximum = salary;
-                employee = array[i];
-            }
-        }
-        return employee;
-    }
-
-    public static Employee getMaxSalary(Employee[] array, int departmentForSelection) {
-        int maximum = 0;
-        Employee employee = array[0];
-        for (int i = 1; i < array.length; i++) {
-            int salary = array[i].getSalary();
-            int department = array[i].getDepartment();
-            if (department == departmentForSelection && maximum < salary){
-                maximum = salary;
-                employee = array[i];
-            }
-        }
-        return employee;
-    }
-
-    public static int getAvaregeSalary(Employee[] array) {
-        int sum = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            sum =sum + array[i].getSalary();
-
-        }
-        return sum/array.length;
-    }
-
-    public static int getAvaregeSalary(Employee[] array, int departmentForSelection) {
-        int sum = 0;
-        int count = 0;
-
-        for (int i = 0; i < array.length; i++) {
-            if(array[i].getDepartment()==departmentForSelection) {
-                sum = sum + array[i].getSalary();
-                count++;
+        //Получить Ф. И. О. всех сотрудников по отделам (напечатать список отделов и их сотрудников).
+        for (int iDepartment = 1; iDepartment <= 5; iDepartment++) {
+            System.out.println("------------------------------");
+            System.out.println(iDepartment);
+            for (int i = 0; i < array.length; i++) {
+                if (array[i].getDepartment() == iDepartment) {
+                    System.out.println(array[i]);
+                }
             }
 
         }
-        return sum/count;
     }
-
-    public static Employee[] indexSalary(Employee[] array, int index) {
-        for (int i = 0; i < array.length; i++) {
-       Employee employee  = array[i];
-       int oldSalary = employee.getSalary() ;
-       double perIndex = 1.00 + (double)index/100 ;
-       double newSalary = (double) oldSalary * perIndex;
-        employee.setSalary((int)newSalary);
-    }
-        return array;
-}
-
-    public static Employee[] indexSalary(Employee[] array, int index, int departmentForSelection) {
-        for (int i = 0; i < array.length; i++) {
-            if(array[i].getDepartment()==departmentForSelection) {
-                Employee employee = array[i];
-                int oldSalary = employee.getSalary();
-                double perIndex = 1.00 + (double) index / 100;
-                double newSalary = (double) oldSalary * perIndex;
-                employee.setSalary((int) newSalary);
-            }
-        }
-        return array;
-    }
-
 }
