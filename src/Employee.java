@@ -6,7 +6,6 @@ public class Employee {
    private int id;
    private static int count;
 
-
     @Override
     public String toString() {
         return
@@ -14,6 +13,7 @@ public class Employee {
                 ", отдел=" + department +
                 ", зарплата=" + salary;
     }
+
 
     public Employee(String name, int department, int salary)
     {
