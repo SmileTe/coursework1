@@ -17,7 +17,8 @@ public class Main {
         EmployeeBook employeeBook = new EmployeeBook(array);
 
         task1(employeeBook);
-        task2(employeeBook, 2);
+
+       task2(employeeBook, 2);
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите число");
@@ -26,29 +27,27 @@ public class Main {
         System.out.println("-----------------");
         System.out.println("Сотрудники с зарплатой меньше числа");
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
+            if(array[i] !=null ){
+                if(array[i].getSalary()<num) {
+                    System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
+                    System.out.println();
+                }
             }
-            if(array[i].getSalary()<num) {
-                System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
-                System.out.println();
-            }
+
         }
         //Всех сотрудников с зарплатой меньше числа (вывести id, Ф. И. О. и зарплатой в консоль).
         System.out.println("-----------------");
         System.out.println("Сотрудники с зарплатой больше (или равно) числа");
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
-            }
-            if(array[i].getSalary()>=num) {
-                System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
-                System.out.println();
+            if(array[i] !=null ){
+                if(array[i].getSalary()>=num) {
+                    System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
+                    System.out.println();
+                }
             }
         }
 
         task3(employeeBook);
-
     }
 
     public static void task1(EmployeeBook employeeBook) {
@@ -56,10 +55,10 @@ public class Main {
 
         //список всех сотрудников
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
+            if(array[i] !=null ){
+                System.out.println(array[i].toString());
             }
-            System.out.println(array[i].toString());
+
         }
 
         //сумма зп
@@ -76,20 +75,20 @@ public class Main {
 
         //фио всех сотрудников
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
+            if(array[i] !=null ){
+                System.out.println(array[i].getName());
             }
-            System.out.println(array[i].getName());
+
         }
 
         array = employeeBook.indexSalary(array, 6);
 
         //список всех сотрудников
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
+            if(array[i] !=null ){
+                System.out.println(array[i].toString());
             }
-            System.out.println(array[i].toString());
+
         }
     }
 
@@ -113,12 +112,12 @@ public class Main {
 
         //6. Напечатать всех сотрудников отдела (все данные, кроме отдела).
         for (int i = 0; i < array.length; i++) {
-            if(array[i] ==null ){
-                continue;
+            if(array[i] !=null ){
+                if (array[i].getDepartment() == departmentForSelection) {
+                    System.out.println(array[i].toString());
+                }
             }
-            if (array[i].getDepartment() == departmentForSelection) {
-                System.out.println(array[i].toString());
-            }
+
         }
     }
 
@@ -141,12 +140,12 @@ public class Main {
             System.out.println("------------------------------");
             System.out.println(iDepartment);
             for (int i = 0; i < array.length; i++) {
-                if(array[i] ==null ){
-                    continue;
+                if(array[i] !=null ){
+                    if (array[i].getDepartment() == iDepartment) {
+                        System.out.println(array[i]);
+                    }
                 }
-                if (array[i].getDepartment() == iDepartment) {
-                    System.out.println(array[i]);
-                }
+
             }
 
         }
