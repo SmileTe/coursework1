@@ -4,16 +4,16 @@ public class Main {
     public static void main(String[] args) {
 
         Employee[] array = new Employee[10];
-        array[0] = new Employee("Иванов Иван Иванович", 1, 20_000);
-        array[1] = new Employee("Петров Петр Петрович", 2, 25_000);
-        array[2] = (new Employee("Сидоров Сидор Сидорович", 3, 30_000));
-        array[3] = (new Employee("Козлов П.П", 4, 20_000));
-        array[4] = (new Employee("Кузнецов Е.Е", 5, 25_000));
+        array[0] = new Employee("иван", "иванов",1, 20_000);
+        array[1] = new Employee("Петр", "Петров", 2, 25_000);
+        array[2] = (new Employee("Сидор","Сидоров", 3, 30_000));
+        array[3] = (new Employee("Павел","Павлов", 4, 20_000));
+        array[4] = (new Employee("Евгений", "Евгеньевич", 5, 25_000));
         //array[5] = null;//(new Employee("Смирнов В.В", 1, 35_000));
-        array[6] = (new Employee("Васечкин П.П", 2, 40_000));
-        array[7] = (new Employee("Рыжов Е.Е", 3, 45_000));
-        array[8] = (new Employee("Васильев А.А", 4, 50_000));
-        array[9] = new Employee("Соколов П.П", 5, 55_000);
+        array[6] = (new Employee("Василий", "Васильев", 2, 40_000));
+        array[7] = (new Employee("Сергей", "Иванов", 3, 45_000));
+        array[8] = (new Employee("Геннадий", "Крокодил", 4, 50_000));
+        array[9] = new Employee("Павел", "Соколов", 5, 55_000);
         EmployeeBook employeeBook = new EmployeeBook(array);
 
         task1(employeeBook);
@@ -29,7 +29,7 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             if(array[i] !=null ){
                 if(array[i].getSalary()<num) {
-                    System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
+                    System.out.printf("%1d %2s %3s %4d", array[i].getId(), array[i].getFirstName(), array[i].getLastName(), array[i].getSalary());
                     System.out.println();
                 }
             }
@@ -41,7 +41,7 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             if(array[i] !=null ){
                 if(array[i].getSalary()>=num) {
-                    System.out.printf("%1d, %2s %3d", array[i].getId(), array[i].getName(), array[i].getSalary());
+                    System.out.printf("%1d, %2s %3s %4d", array[i].getId(), array[i].getFirstName(), array[i].getLastName(), array[i].getSalary());
                     System.out.println();
                 }
             }
@@ -76,7 +76,7 @@ public class Main {
         //фио всех сотрудников
         for (int i = 0; i < array.length; i++) {
             if(array[i] !=null ){
-                System.out.println(array[i].getName());
+                System.out.println(array[i].getFirstName() + " " + array[i].getLastName());
             }
 
         }
@@ -125,15 +125,15 @@ public class Main {
         Employee[] array = employeeBook.getArray();
 
         // Удалить сотрудника (находим сотрудника по Ф. И. О. и/или id, о
-        employeeBook.deleteWorker("Test", 2);
+        employeeBook.deleteWorker("Test","Test",2);
 
         //Добавить нового сотрудника в свободную ячейку
-        Employee newWorker = new Employee("Хрюша М.М", 1, 29_000);
+        Employee newWorker = new Employee("Хрюша", "Михайлов",1, 29_000);
         int position = employeeBook.addNewWorker(newWorker);
         System.out.println("Сотрудник добавлен в индекс" + position);
 
         //Изменить сотрудника (получить сотрудника по Ф. И. О., изменить зп и/или отдел):
-         employeeBook.changeWorker(array, "Хрюша М.М", 2, 22_000);
+         employeeBook.changeWorker(array, "Хрюша","Михайлов", 2, 22_000);
 
         //Получить Ф. И. О. всех сотрудников по отделам (напечатать список отделов и их сотрудников).
         for (int iDepartment = 1; iDepartment <= 5; iDepartment++) {

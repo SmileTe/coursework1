@@ -169,10 +169,10 @@ public class EmployeeBook {
         }
 
 
-    public void  deleteWorker( String name, int id) {
+    public void  deleteWorker( String firstName, String lastName, int id) {
         for (int i = 0; i < array.length; i++) {
             if(array[i] !=null ){
-                if (array[i].getName() == name || array[i].getId() == id) {
+                if (array[i].getFirstName() == firstName || array[i].getLastName() == lastName || array[i].getId() == id) {
                     array[i] = null;
                     break;
                 }
@@ -182,10 +182,10 @@ public class EmployeeBook {
 
     }
 
-    public Employee[] changeWorker(Employee[] array, String name, int newDepartment, int newSalary) {
+    public Employee[] changeWorker(Employee[] array, String firstName, String lastName, int newDepartment, int newSalary) {
         for (int i = 0; i < array.length; i++) {
             if(array[i] !=null ){
-                if (array[i].getName() == name) {
+                if (array[i].getFirstName() == firstName ||array[i].getLastName() == lastName) {
                     if (newDepartment != 0) {
                         array[i].setDepartment(newDepartment);
                     }
