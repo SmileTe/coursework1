@@ -1,3 +1,5 @@
+package com.skypro.employee.model;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class Employee {
