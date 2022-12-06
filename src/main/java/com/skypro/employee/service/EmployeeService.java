@@ -2,11 +2,10 @@ package com.skypro.employee.service;
 
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.model.EmployeeBook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -14,7 +13,9 @@ public class EmployeeService {
 
     private final EmployeeBook employeeBook;
 
+    //@Autowired
     public EmployeeService(EmployeeBook employeeBook) {
+
         this.employeeBook = employeeBook;
     }
 
@@ -22,8 +23,8 @@ public class EmployeeService {
         return employeeBook.getArray();
     }
 
-    public Employee addEmployee(EmployeeRequest employeeRequest) {
-        final Employee newEmployee = createEmployeeFromRequest(employeeRequest, employeeBook.getLastId());
+    public Employee addEmployee(Employee newEmployee) {
+       // final Employee newEmployee = createEmployeeFromRequest(employeeRequest, employeeBook.getLastId());
         employeeBook.addNewWorker(newEmployee);
         return newEmployee;
 
@@ -47,19 +48,61 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployeeWithSalaryMoreAverage(){
-        int average = employeeBook.getAverageSalary();
+        int average = employeeBook.getAverageSalary(employeeBook.getArray());
         return employeeBook.getArray().stream()
-                .filter(employee -> employee.getSalary() > average)
+                .filter(employee -> employee.getSalary() >average )
                 .collect(Collectors.toList());
+    }
+
+    public void  deleteWorker( String firstName, String lastName, int id) {
+        employeeBook.deleteWorker( firstName, lastName, id);
+    }
+
+
+    public Set<Integer> getExistingsDepartments() {
+        return employeeBook.getArray().stream()
+                .map(Employee::getDepartment)
+                .collect(Collectors.toSet());
+    }
+
+
+    public Map<Integer, List<Employee>> getEmployeesByDepartment(int departmentId) {
+        return getExistingsDepartments().stream()
+                .collect(Collectors.toMap(dept->dept, this::getEmployeesFromDepartment));
+
+    }
+    public ArrayList<Employee> getEmployeesFromDepartment(int departmentId) {
+//        ArrayList<Employee> employeeList = employeeBook.getArray();
+//        List<Employee> filteredEmployees  = employeeList.stream()
+//                .filter(employee -> employee.getDepartment() == departmentId)
+//                .collect(Collectors.toList());
+        ArrayList<Employee> filteredEmployees = employeeBook.getEmployeesFromDepartment(departmentId);
+        return new ArrayList<>(filteredEmployees);
+    }
+
+    public int getSalarySumOfDepartment(int departmentId){
+        return getEmployeesFromDepartment(departmentId).stream()
+                .mapToInt(Employee::getSalary)
+                .sum();
+    }
+    public int getMinSalaryOfDepartment(int departmentId){
+        return getEmployeesFromDepartment(departmentId).stream()
+                .mapToInt(Employee::getSalary)
+                .min().getAsInt();
+    }
+
+    public int getMaxSalaryOfDepartment(int departmentId){
+        return getEmployeesFromDepartment(departmentId).stream()
+                .mapToInt(Employee::getSalary)
+                .max().getAsInt();
     }
 
 
 
-
 }
 
 
-}
+//}
 //    public EmployeeService(ArrayList<Employee> array, EmployeeBook employeeBook) {
 //        this.array = array;
 //        this.employeeBook = employeeBook;

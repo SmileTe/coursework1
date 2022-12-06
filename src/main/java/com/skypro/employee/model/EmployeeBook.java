@@ -1,18 +1,32 @@
 package com.skypro.employee.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmployeeBook {
-    private List<Employee> array;
+    private ArrayList<Employee> array;
     private static int lastId;
 
     public EmployeeBook(ArrayList<Employee> newArray) {
         this.array = newArray;
     }
 
-    public List<Employee> getArray() {
+    public EmployeeBook() {
+        //this.array = array;
+    }
+
+    public ArrayList<Employee> getArray() {
         return array;
+    }
+
+
+    public ArrayList<Employee> getEmployeesFromDepartment(int departmentId) {
+        List<Employee> filteredEmployees  = getArray().stream()
+                .filter(employee -> employee.getDepartment() == departmentId)
+                .collect(Collectors.toList());
+        return new ArrayList<>(filteredEmployees);
     }
 
     public void setArray(ArrayList<Employee> array) {
@@ -107,25 +121,25 @@ public class EmployeeBook {
         return employee;
     }
 
-    public int getAverageSalary(ArrayList<Employee> array) {
+    public int getAverageSalary(List<Employee> array) {
         int sum = 0;
 
-        for (int i = 0; i < array.size()-1; i++) {
-            if(array.get(i) !=null ){
-                sum = sum + array.get(i).getSalary();
+        for (int i = 0; i < this.array.size(); i++) {
+            if(this.array.get(i) !=null ){
+                sum = sum + this.array.get(i).getSalary();
             }
         }
-        return sum / array.size()-1;
+        return sum / this.array.size()-1;
     }
 
     public int getAverageSalary(ArrayList<Employee> array, int departmentForSelection) {
         int sum = 0;
         int count = 0;
 
-        for (int i = 0; i < array.size()-1; i++) {
-            if(array.get(i) !=null ){
-                if (array.get(i).getDepartment() == departmentForSelection) {
-                    sum = sum + array.get(i).getSalary();
+        for (int i = 0; i < this.array.size()-1; i++) {
+            if(this.array.get(i) !=null ){
+                if (this.array.get(i).getDepartment() == departmentForSelection) {
+                    sum = sum + this.array.get(i).getSalary();
                     count++;
                 }
             }
@@ -178,10 +192,10 @@ public class EmployeeBook {
 
 
     public void  deleteWorker( String firstName, String lastName, int id) {
-        for (int i = 0; i < array.size()-1; i++) {
-            if(array.get(i) !=null ){
-                if (array.get(i).getFirstName() == firstName || array.get(i).getLastName() == lastName || array.get(i).getId() == id) {
-                    array.set(i, null);
+        for (int i = 0; i < this.array.size()-1; i++) {
+            if(this.array.get(i) !=null ){
+                if (this.array.get(i).getFirstName() == firstName || this.array.get(i).getLastName() == lastName || this.array.get(i).getId() == id) {
+                    this.array.set(i, null);
                     break;
                 }
             }
@@ -212,4 +226,7 @@ public class EmployeeBook {
     public static int getLastId() {
         return lastId;
     }
+
+
+
 }

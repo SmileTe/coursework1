@@ -2,7 +2,7 @@ package com.skypro.employee.controller;
 
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -12,7 +12,7 @@ import java.util.Collection;
 public class EmployeeController {
     public final EmployeeService employeeService;
 
-    @Autowired
+    //@Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
@@ -23,8 +23,10 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee addEmployee(@RequestBody EmployeeRequest employeeRequest){
-        return employeeService.addEmployee(employeeRequest);
+    public Employee addEmployee(){
+        Employee newWorker = new Employee("Хрюша", "Михайлов",1, 29_000);
+
+        return employeeService.addEmployee(newWorker);
     }
 @GetMapping("/salary/sum ")
     public int getSumOfSalaries(){

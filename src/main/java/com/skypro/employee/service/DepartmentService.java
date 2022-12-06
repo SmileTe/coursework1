@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 public class DepartmentService {
     private final EmployeeBook employeeBook;
 
-    @Autowired
-    public DepartmentService(EmployeeBook employeeBook) {
+     public DepartmentService(EmployeeBook employeeBook) {
         this.employeeBook = employeeBook;
     }
 
