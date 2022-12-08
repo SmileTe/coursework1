@@ -27,9 +27,7 @@ public void setUp(){
     array.add(new Employee("Евгений", "Евгеньевич", 5, 25_000));
 
     EmployeeBook employeeBook = new EmployeeBook(array);
-
     employeeService = new EmployeeService(employeeBook);
-
 }
 
     @Test

@@ -33,22 +33,9 @@ public class DepartmentController {
   }
 
   @GetMapping("/{id}/employees")
-  public ArrayList<Employee> getEmployeesFromDepartment(@PathVariable("id") int departmentId){
-//    List<Employee> filteredEmployees = employeeService.getEmployees().stream()
-//            .filter(employee -> employee.getDepartment() == departmentId)
-//            .collect(Collectors.toList());
-//    return new ArrayList<Employee>(filteredEmployees);
-//    List<Employee> employees = employeeService.getEmployees();
-//    ArrayList<Employee> filteredEmployees= new ArrayList<>();
-//    for (Employee employee:employees) {
-//      if(employee.getDepartment() == departmentId){
-//        filteredEmployees.add(employee);
-//      }
-//    }
-//
-//    return filteredEmployees;
-    List<Employee> employees =   departmentService.getEmployeesFromDepartment(departmentId);
- return new ArrayList<Employee>(employees);
+  public ArrayList<Employee> getEmployeesFromDepartment(@PathVariable("id") int departmentId) {
+      List<Employee> employees = departmentService.getEmployeesFromDepartment(departmentId);
+      return new ArrayList<Employee>(employees);
   }
 
   @GetMapping("/{id}/salary/sum")
