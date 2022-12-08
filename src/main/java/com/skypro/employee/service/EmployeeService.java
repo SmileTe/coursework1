@@ -19,6 +19,11 @@ public class EmployeeService {
         this.employeeBook = employeeBook;
     }
 
+//    public EmployeeService() {
+//
+//        this.employeeBook = new EmployeeBook();
+//    }
+
     public List<Employee> getEmployees() {
         return employeeBook.getArray();
     }

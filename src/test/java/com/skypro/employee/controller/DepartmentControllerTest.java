@@ -2,6 +2,7 @@ package com.skypro.employee.controller;
 
 import com.skypro.employee.model.Employee;
 import com.skypro.employee.model.EmployeeBook;
+import com.skypro.employee.service.DepartmentService;
 import com.skypro.employee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,19 +23,17 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class DepartmentControllerTest {
 
-    @Mock
-    EmployeeBook employeeBook;
-
-
-    DepartmentController departmentController;
-
+    private DepartmentController departmentController;
+    private DepartmentService departmentService;
 
     @InjectMocks
-    ArrayList<Employee> array= new ArrayList<>();
+    private ArrayList<Employee> array= new ArrayList<>();
+
+     @Mock
+     private EmployeeService employeeService;
 
     @Mock
-    EmployeeService employeeService;
-
+    private EmployeeBook employeeBook;
 
     @BeforeEach
     public void setUp(){
@@ -46,9 +45,12 @@ public class DepartmentControllerTest {
         array.add(new Employee("Павел","Павлов", 4, 20_000));
         array.add(new Employee("Евгений", "Евгеньевич", 5, 25_000));
 
-        EmployeeBook employeeBook = new EmployeeBook(array);
 
+        employeeBook = new EmployeeBook(array);
         employeeService = new EmployeeService(employeeBook);
+
+        departmentService = new DepartmentService(employeeService);
+        departmentController = new DepartmentController(departmentService);
 
     }
 
@@ -56,7 +58,7 @@ public class DepartmentControllerTest {
     public void getEmployeesFromDepartment(){
 
         int departmentId = 1;
-       when(employeeService.getEmployeesFromDepartment(departmentId)).thenReturn(array);
+       when(employeeService.getEmployees()).thenReturn(array);
         ArrayList<Employee>test1 = departmentController.getEmployeesFromDepartment(departmentId);
         for (Employee employee:test1) {
             System.out.println(employee);

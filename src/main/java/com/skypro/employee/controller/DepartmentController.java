@@ -8,49 +8,62 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import javax.swing.event.ListDataListener;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/departments")
 public class DepartmentController {
 
-  public final EmployeeService employeeService;
+  public final DepartmentService departmentService;
 
-  public DepartmentController(EmployeeService employeeService) {
-    this.employeeService = employeeService;
+  public DepartmentController(DepartmentService departmentService) {
+    this.departmentService = departmentService;
   }
 
   @GetMapping
   public String getExistingsDepartments(){
-    return "Departments:"  + employeeService.getExistingsDepartments().toString();
+    return "Departments:"  + departmentService.getExistingsDepartments().toString();
   }
 
   @GetMapping("/employees")
   public Map<Integer, List<Employee>> getEmployeesByDepartment(@PathVariable("id") int departmentId){
-    return employeeService.getEmployeesByDepartment(departmentId);
+    return departmentService.getEmployeesByDepartment(departmentId);
   }
 
   @GetMapping("/{id}/employees")
   public ArrayList<Employee> getEmployeesFromDepartment(@PathVariable("id") int departmentId){
-    return employeeService.getEmployeesFromDepartment(departmentId);
+//    List<Employee> filteredEmployees = employeeService.getEmployees().stream()
+//            .filter(employee -> employee.getDepartment() == departmentId)
+//            .collect(Collectors.toList());
+//    return new ArrayList<Employee>(filteredEmployees);
+//    List<Employee> employees = employeeService.getEmployees();
+//    ArrayList<Employee> filteredEmployees= new ArrayList<>();
+//    for (Employee employee:employees) {
+//      if(employee.getDepartment() == departmentId){
+//        filteredEmployees.add(employee);
+//      }
+//    }
+//
+//    return filteredEmployees;
+    List<Employee> employees =   departmentService.getEmployeesFromDepartment(departmentId);
+ return new ArrayList<Employee>(employees);
   }
 
   @GetMapping("/{id}/salary/sum")
   public int getSalarySumOfDepartment(@PathVariable("id") int departmentId){
-    return employeeService.getSalarySumOfDepartment(departmentId);
+    return departmentService.getSalarySumOfDepartment(departmentId);
   }
 
   @GetMapping("/{id}/salary/min")
   public int getMinSalaryOfDepartment(@PathVariable("id") int departmentId){
-    return employeeService.getMinSalaryOfDepartment(departmentId);
+    return departmentService.getMinSalaryOfDepartment(departmentId);
   }
 
   @GetMapping("/{id}/salary/max")
   public int getMaxSalaryOfDepartment(@PathVariable("id") int departmentId){
-    return employeeService.getMaxSalaryOfDepartment(departmentId);
+    return departmentService.getMaxSalaryOfDepartment(departmentId);
   }
 
 
